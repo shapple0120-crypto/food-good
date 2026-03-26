@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+2<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
@@ -8,50 +8,62 @@
 </head>
 <body>
 
-  <div class="container">
-    <h1>🍽 음식 메뉴 추천 룰렛</h1>
+  <div class="main-layout">
+    <div class="container">
+      <h1>🍽 음식 메뉴 추천 룰렛</h1>
 
-    <div class="selector-box">
-      <select id="category">
-        <option value="korean">한식</option>
-        <option value="chinese">중식</option>
-        <option value="western">양식</option>
-        <option value="japanese">일식</option>
-      </select>
-      <button id="spin-button">룰렛 돌리기!</button>
+      <div class="selector-box">
+        <select id="category">
+          <option value="korean">한식</option>
+          <option value="chinese">중식</option>
+          <option value="western">양식</option>
+          <option value="japanese">일식</option>
+        </select>
+        <button id="spin-button">룰렛 돌리기!</button>
+      </div>
+
+      <div class="roulette-container">
+        <div id="pointer">▼</div>
+        <canvas id="roulette-canvas" width="500" height="500"></canvas>
+      </div>
+
+      <div id="result-container" class="hidden">
+        <div id="result-text">추천 메뉴: <span></span></div>
+        <img id="result-image" src="" alt="추천 메뉴 이미지">
+      </div>
+
+      <hr class="divider">
+
+      <div class="contact-section">
+        <h2>🤝 제휴 문의</h2>
+        <p>비즈니스 협업 및 제휴 제안을 기다립니다.</p>
+        <form action="https://formspree.io/f/xqegkwpk" method="POST" id="contact-form">
+          <div class="form-group">
+            <label for="name">성함 / 업체명</label>
+            <input type="text" id="name" name="name" placeholder="홍길동 (또는 주식회사 OO)" required>
+          </div>
+          <div class="form-group">
+            <label for="email">이메일 주소</label>
+            <input type="email" id="email" name="email" placeholder="example@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="message">문의 내용</label>
+            <textarea id="message" name="message" rows="5" placeholder="제휴 제안 내용을 상세히 적어주세요." required></textarea>
+          </div>
+          <button type="submit" class="submit-button">문의하기</button>
+        </form>
+      </div>
     </div>
 
-    <div class="roulette-container">
-      <div id="pointer">▼</div>
-      <canvas id="roulette-canvas" width="500" height="500"></canvas>
-    </div>
-
-    <div id="result-container" class="hidden">
-      <div id="result-text">추천 메뉴: <span></span></div>
-      <img id="result-image" src="" alt="추천 메뉴 이미지">
-    </div>
-
-    <hr class="divider">
-
-    <div class="contact-section">
-      <h2>🤝 제휴 문의</h2>
-      <p>비즈니스 협업 및 제휴 제안을 기다립니다.</p>
-      <form action="https://formspree.io/f/xqegkwpk" method="POST" id="contact-form">
-        <div class="form-group">
-          <label for="name">성함 / 업체명</label>
-          <input type="text" id="name" name="name" placeholder="홍길동 (또는 주식회사 OO)" required>
-        </div>
-        <div class="form-group">
-          <label for="email">이메일 주소</label>
-          <input type="email" id="email" name="email" placeholder="example@email.com" required>
-        </div>
-        <div class="form-group">
-          <label for="message">문의 내용</label>
-          <textarea id="message" name="message" rows="5" placeholder="제휴 제안 내용을 상세히 적어주세요." required></textarea>
-        </div>
-        <button type="submit" class="submit-button">문의하기</button>
-      </form>
-    </div>
+    <aside class="sidebar">
+      <div class="seasonal-box">
+        <h3>🗓 <span id="current-month"></span>월 제철 음식</h3>
+        <p>지금 가장 맛있는 식재료</p>
+        <ul id="seasonal-list">
+          <!-- Dynamically populated -->
+        </ul>
+      </div>
+    </aside>
   </div>
 
   <script src="main.js"></script>

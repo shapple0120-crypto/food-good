@@ -5,6 +5,8 @@ const categorySelect = document.getElementById("category");
 const resultContainer = document.getElementById("result-container");
 const resultTextSpan = document.querySelector("#result-text span");
 const resultImg = document.getElementById("result-image");
+const seasonalList = document.getElementById("seasonal-list");
+const currentMonthSpan = document.getElementById("current-month");
 
 const menus = {
   korean: [
@@ -32,6 +34,21 @@ const menus = {
     "사케동", "에비동", "야키니쿠", "카레라이스", "가라아게",
     "나베", "메밀소바", "장어덮밥", "회덮밥", "돈코츠라멘"
   ]
+};
+
+const seasonalFoods = {
+  1: ["더덕", "과메기", "꼬막", "명태", "한라봉"],
+  2: ["아귀", "바지락", "우엉", "딸기", "삼치"],
+  3: ["냉이", "달래", "쑥", "쭈꾸미", "소라"],
+  4: ["두릅", "엄나무순", "미더덕", "키조개", "참나물"],
+  5: ["매실", "멍게", "다슬기", "취나물", "장어"],
+  6: ["감자", "참외", "장어", "복분자", "매실"],
+  7: ["복숭아", "수박", "토마토", "옥수수", "갈치"],
+  8: ["포도", "전복", "참나물", "고구마", "블루베리"],
+  9: ["대하", "전어", "꽃게", "배", "은행"],
+  10: ["사과", "고등어", "무", "늙은호박", "석류"],
+  11: ["배추", "무", "굴", "해삼", "도루묵"],
+  12: ["명태", "아귀", "도미", "한라봉", "유자"]
 };
 
 const colors = ["#f1c40f", "#e67e22", "#e74c3c", "#9b59b6", "#3498db", "#2ecc71", "#1abc9c", "#34495e"];
@@ -75,15 +92,14 @@ function spin() {
   
   const items = menus[currentCategory];
   const numSegments = items.length;
-  const spinAngle = Math.random() * 360 + 3600; // At least 10 full rotations
-  const duration = 4000; // 4 seconds
+  const spinAngle = Math.random() * 360 + 3600;
+  const duration = 4000;
   const startTimestamp = performance.now();
 
   function animate(timestamp) {
     const elapsed = timestamp - startTimestamp;
     const progress = Math.min(elapsed / duration, 1);
     
-    // Easing out function
     const easeOut = 1 - Math.pow(1 - progress, 3);
     const rotation = easeOut * spinAngle;
     
@@ -95,9 +111,6 @@ function spin() {
       isSpinning = false;
       currentRotation = rotation % 360;
       
-      // Calculate selected item
-      // The pointer is at the top (270 degrees in canvas terms, or -90)
-      // Since we rotate the canvas clockwise, we need to find which segment is at the top.
       const arcSizeDeg = 360 / numSegments;
       const actualRotation = (360 - (currentRotation % 360) + 270) % 360;
       const selectedIndex = Math.floor(actualRotation / arcSizeDeg);
@@ -112,9 +125,22 @@ function spin() {
 
 function showResult(item) {
   resultTextSpan.innerText = item;
-  // Use a food image service. LoremFlickr is good for this.
-  resultImg.src = `https://loremflickr.com/640/480/${encodeURIComponent(item)}`;
+  // Refine search query with "food" and "dish" for better accuracy
+  resultImg.src = `https://loremflickr.com/640/480/food,${encodeURIComponent(item)},dish/all`;
   resultContainer.classList.remove("hidden");
+}
+
+function updateSeasonalFoods() {
+  const month = new Date().getMonth() + 1;
+  currentMonthSpan.innerText = month;
+  
+  const foods = seasonalFoods[month];
+  seasonalList.innerHTML = "";
+  foods.forEach(food => {
+    const li = document.createElement("li");
+    li.innerText = food;
+    seasonalList.appendChild(li);
+  });
 }
 
 categorySelect.addEventListener("change", (e) => {
@@ -126,5 +152,6 @@ categorySelect.addEventListener("change", (e) => {
 
 spinBtn.addEventListener("click", spin);
 
-// Initial draw
+// Initial setup
 drawRoulette(currentCategory);
+updateSeasonalFoods();

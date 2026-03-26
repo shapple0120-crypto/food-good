@@ -3,10 +3,19 @@ body {
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   min-height: 100vh;
   margin: 0;
   color: #333;
+  padding: 40px 20px;
+}
+
+.main-layout {
+  display: flex;
+  gap: 30px;
+  max-width: 1000px;
+  width: 100%;
+  align-items: flex-start;
 }
 
 .container {
@@ -15,8 +24,74 @@ body {
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   text-align: center;
-  max-width: 600px;
-  width: 90%;
+  flex: 1;
+}
+
+.sidebar {
+  width: 250px;
+  flex-shrink: 0;
+}
+
+.seasonal-box {
+  background-color: white;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 40px;
+}
+
+.seasonal-box h3 {
+  margin-top: 0;
+  color: #2c3e50;
+  font-size: 1.2rem;
+  border-bottom: 2px solid #f1c40f;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.seasonal-box p {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.seasonal-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.seasonal-box li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  font-weight: 500;
+  color: #444;
+  transition: transform 0.2s;
+}
+
+.seasonal-box li:last-child {
+  border-bottom: none;
+}
+
+.seasonal-box li:hover {
+  transform: translateX(5px);
+  color: #e67e22;
+}
+
+@media (max-width: 900px) {
+  .main-layout {
+    flex-direction: column;
+    align-items: center;
+  }
+  .sidebar {
+    width: 100%;
+    order: -1;
+  }
+  .seasonal-box {
+    position: static;
+    margin-bottom: 20px;
+  }
 }
 
 h1 {
