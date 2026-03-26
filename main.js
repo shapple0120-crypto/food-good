@@ -36,6 +36,31 @@ const menus = {
   ]
 };
 
+// Translation map for better image search on LoremFlickr
+const menuTranslations = {
+  // Korean
+  "김치찌개": "kimchistew", "된장찌개": "soybeanpastestew", "순두부찌개": "softtofu", "제육볶음": "spicypork", "불고기": "bulgogi",
+  "비빔밥": "bibimbap", "갈비탕": "galbitang", "삼계탕": "samgyetang", "닭갈비": "dakgalbi", "보쌈": "bossam",
+  "족발": "jokbal", "김밥": "gimbap", "떡볶이": "tteokbokki", "라면": "ramyeon", "냉면": "naengmyeon",
+  "칼국수": "kalguksu", "수제비": "sujebi", "오징어볶음": "squid", "닭볶음탕": "spicychicken", "설렁탕": "seolleongtang",
+  "육개장": "yukgaejang", "곰탕": "gomtang", "순대국": "sundaeguk", "청국장": "cheonggukjang", "감자탕": "gamjatang",
+  // Chinese
+  "짜장면": "jjajangmyeon", "짬뽕": "jjamppong", "탕수육": "sweetandsourpork", "마라탕": "malatang", "마라샹궈": "malashanguo",
+  "깐풍기": "kkampunggi", "유린기": "yuringi", "양장피": "yangjangpi", "볶음밥": "friedrice", "군만두": "dumplings",
+  "고추잡채": "peppers", "훠궈": "hotpot", "마파두부": "mapotofu", "라즈지": "laziji", "샤오롱바오": "xiaolongbao",
+  "동파육": "dongpoyu", "멘보샤": "menbosha", "유산슬": "yusanseul", "누룽지탕": "scorchedrice", "울면": "ulmyeon",
+  // Western
+  "파스타": "pasta", "스테이크": "steak", "피자": "pizza", "햄버거": "burger", "리조또": "risotto",
+  "샐러드": "salad", "오믈렛": "omelette", "토스트": "toast", "핫도그": "hotdog", "치킨": "friedchicken",
+  "감바스": "gambas", "브런치": "brunch", "샌드위치": "sandwich", "크림파스타": "creampasta", "라자냐": "lasagna",
+  "에그베네딕트": "eggbenedict", "바베큐립": "bbqribs", "피쉬앤칩스": "fishandchips", "퀘사디아": "quesadilla", "타코": "taco",
+  // Japanese
+  "초밥": "sushi", "라멘": "ramen", "돈카츠": "tonkatsu", "우동": "udon", "소바": "soba",
+  "규동": "gyudon", "텐동": "tendon", "오코노미야끼": "okonomiyaki", "타코야끼": "takoyaki", "가츠동": "katsudon",
+  "사케동": "sakedon", "에비동": "ebidon", "야키니쿠": "yakiniku", "카레라이스": "curryrice", "가라아게": "karaage",
+  "나베": "nabe", "메밀소바": "soba", "장어덮밥": "unagi", "회덮밥": "hoedeopbap", "돈코츠라멘": "tonkotsuramen"
+};
+
 const seasonalFoods = {
   1: ["더덕", "과메기", "꼬막", "명태", "한라봉"],
   2: ["아귀", "바지락", "우엉", "딸기", "삼치"],
@@ -125,8 +150,13 @@ function spin() {
 
 function showResult(item) {
   resultTextSpan.innerText = item;
-  // Refine search query with "food" and "dish" for better accuracy
-  resultImg.src = `https://loremflickr.com/640/480/food,${encodeURIComponent(item)},dish/all`;
+  
+  // Use English translation for more accurate image search
+  const engKeyword = menuTranslations[item] || "food";
+  // LoremFlickr will return a food image related to the keyword
+  // Adding 'all' at the end to force search within the tags
+  resultImg.src = `https://loremflickr.com/640/480/food,${engKeyword}/all`;
+  
   resultContainer.classList.remove("hidden");
 }
 
